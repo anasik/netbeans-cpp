@@ -22,10 +22,13 @@ def get(url):
 
 catalog_url = sys.argv[1]
 catalog = ET.fromstring(get(catalog_url))
-records = json.loads(get(urllib.parse.urljoin(catalog_url, 'build.json')))['packages']
-expected = {r['file']: r['sha256'] for r in records}
 modules = catalog.findall('.//module')
 assert len(modules) >= 30
+# Bind checksums to the same immutable release as this catalog. Raw GitHub
+# caches branch files independently, so two branch URLs can show different builds.
+release_url = urllib.parse.urljoin(catalog_url, modules[0].attrib['distribution'])
+records = json.loads(get(urllib.parse.urljoin(release_url, 'build.json')))['packages']
+expected = {r['file']: r['sha256'] for r in records}
 
 
 def check(module):
