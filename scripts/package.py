@@ -37,6 +37,7 @@ def main():
             dependencies.append(manifest.get('OpenIDE-Module') + ' > ' + manifest.get('OpenIDE-Module-Specification-Version'))
             # The visible entry point installs the entire coherent module set.
             info.set('show-in-client', 'false')
+            manifest.set('AutoUpdate-Show-In-Client', 'false')
             info.set('distribution', args.base_url.rstrip('/') + '/' + src.name)
             info.set('downloadsize', str(src.stat().st_size))
             catalog.append(info)
