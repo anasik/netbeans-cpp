@@ -96,7 +96,7 @@ jobs:
       - name: Show verification logs
         if: always()
         run: |
-          cat verification/*.log || true
+          cat verification/* || true
           cat test-userdir/var/log/messages.log || true
       - name: Preserve runtime diagnostics
         if: always()

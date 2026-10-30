@@ -28,7 +28,11 @@ public final class Probe extends ModuleInstall {
                 if (System.getProperty("cpp.catalog") != null) install(); else check();
                 code = 0;
             }
-            catch (Throwable t) { t.printStackTrace(); }
+            catch (Throwable t) {
+                t.printStackTrace();
+                try (PrintStream error = new PrintStream(new FileOutputStream("verification/probe-error.txt"))) { t.printStackTrace(error); }
+                catch (IOException ignored) {}
+            }
             finally { System.exit(code); }
         }, "cpp-integration-check").start();
     }

@@ -4,15 +4,21 @@ Reproducible packaging of [piotrhoppe/netbeans-cnd](https://github.com/piotrhopp
 
 ## Status
 
-Source build and update-center packaging pass. Clean NetBeans 31 installation and runtime verification are in progress. **The public update center is not published yet.**
+**UNVERIFIED PREVIEW — published for installation trials, not a stable or tested release.** Compilation and package integrity checks pass. Clean NetBeans 31 installation/runtime tests run independently and can fail without blocking preview publication. All diagnostics remain visible in Actions.
 
-## Intended installation
+Public preview update center:
 
-Once publication is enabled:
+```text
+https://raw.githubusercontent.com/anasik/netbeans-cpp/gh-pages/updates.xml
+```
+
+The publication job downloads every referenced NBM and checks its size and SHA-256. Packages are also available as explicitly labeled prereleases.
+
+## Installation
 
 1. Open **Tools → Plugins → Settings → Add**.
-2. Name: **C/C++ Support**. Paste the published catalog URL.
-3. Open **Available Plugins**, refresh, and install **C/C++ Support for NetBeans 31**.
+2. Name: **C/C++ Preview**. Paste the catalog URL above.
+3. Open **Available Plugins**, refresh, and install **C/C++ Support for NetBeans 31 (UNVERIFIED PREVIEW)**.
 4. Accept the license and restart NetBeans.
 
 The visible feature installs the complete CND module set automatically. These community packages are unsigned; NetBeans may ask you to accept them.
