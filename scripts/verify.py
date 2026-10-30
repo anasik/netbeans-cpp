@@ -23,7 +23,9 @@ cmd = [str(nb / 'bin/netbeans'), '--nosplash', '--nogui', '--userdir', str(user)
 classes = root / 'probe-classes'
 classes.mkdir(exist_ok=True)
 classpath = os.pathsep.join(str(p) for p in nb.rglob('*.jar'))
-subprocess.run(['javac', '-proc:none', '-cp', classpath, '-d', str(classes), 'tests/Probe.java'], check=True)
+args_file = root / 'javac.args'
+args_file.write_text('-proc:none\n-cp\n"' + classpath + '"\n-d\n"' + str(classes) + '"\ntests/Probe.java\n')
+subprocess.run(['javac', '@' + str(args_file)], check=True)
 manifest = 'Manifest-Version: 1.0\nOpenIDE-Module: re.anas.cppcheck\nOpenIDE-Module-Specification-Version: 1.0\nOpenIDE-Module-Install: re/anas/cppcheck/Probe.class\nOpenIDE-Module-Module-Dependencies: org.openide.modules > 7.0,\n org.openide.util > 9.0, org.openide.util.lookup > 8.0,\n org.openide.filesystems > 9.0, org.openide.loaders > 7.0,\n org.openide.nodes > 7.0, org.netbeans.modules.projectapi/1 > 1.0,\n org.netbeans.modules.autoupdate.services > 1.0,\n org.netbeans.api.progress/1 > 1.0\n\n'
 (user / 'modules').mkdir(parents=True, exist_ok=True)
 with zipfile.ZipFile(user / 'modules/re-anas-cppcheck.jar', 'w') as z:
