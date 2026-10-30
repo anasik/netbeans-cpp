@@ -5,9 +5,6 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
-concurrency:
-  group: netbeans-cpp-publish
-  cancel-in-progress: false
 jobs:
   package:
     name: Build and check preview packages
@@ -48,6 +45,9 @@ jobs:
           if-no-files-found: error
   publish:
     name: Publish unverified preview
+    concurrency:
+      group: preview-publication
+      cancel-in-progress: false
     needs: package
     runs-on: ubuntu-latest
     permissions:
