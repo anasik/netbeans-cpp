@@ -23,6 +23,7 @@ def main():
     out = Path('site')
     out.mkdir(exist_ok=True)
     packages = sorted(Path('upstream/target/nbms').glob('*.nbm'))
+    packages = [p for p in packages if not p.name.startswith('jellytools-')]
     assert len(packages) >= 30, f'Incomplete CND build: {len(packages)} modules'
     catalog = ET.Element('module_updates', timestamp=datetime.datetime.now(datetime.timezone.utc).strftime('%S/%M/%H/%d/%m/%Y'))
     dependencies = []
@@ -61,6 +62,7 @@ def main():
         'OpenIDE-Module-Display-Category': 'C/C++',
         'OpenIDE-Module-Short-Description': 'C/C++ projects, editor, GCC/Clang toolchains and GDB integration.',
         'OpenIDE-Module-Specification-Version': args.version,
+        'OpenIDE-Module-Public-Packages': '-',
         'OpenIDE-Module-Module-Dependencies': ', '.join(dependencies),
         'AutoUpdate-Show-In-Client': 'true',
     }

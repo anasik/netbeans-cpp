@@ -17,16 +17,47 @@ import org.netbeans.spi.project.ActionProgress;
 import org.openide.filesystems.FileUtil;
 import org.openide.loaders.DataObject;
 import org.openide.cookies.EditorCookie;
+import org.netbeans.api.autoupdate.*;
 
 /** Integration checks inside the real NetBeans module system, never shipped. */
 public final class Probe extends ModuleInstall {
     public void restored() {
         new Thread(() -> {
             int code = 1;
-            try { check(); code = 0; }
+            try {
+                if (System.getProperty("cpp.catalog") != null) install(); else check();
+                code = 0;
+            }
             catch (Throwable t) { t.printStackTrace(); }
             finally { System.exit(code); }
         }, "cpp-integration-check").start();
+    }
+
+    static void install() throws Exception {
+        UpdateUnitProviderFactory factory = UpdateUnitProviderFactory.getDefault();
+        for (UpdateUnitProvider p : factory.getUpdateUnitProviders(false)) p.setEnable(false);
+        UpdateUnitProvider provider = factory.create("cpp-test", "C++ test catalog", new java.net.URI(System.getProperty("cpp.catalog")).toURL());
+        provider.refresh(null, true);
+        OperationContainer<InstallSupport> container = OperationContainer.createForInstall();
+        for (UpdateUnit unit : UpdateManager.getDefault().getUpdateUnits(UpdateManager.TYPE.MODULE))
+            if (unit.getCodeName().equals("re.anas.netbeans.cpp")) container.add(unit.getAvailableUpdates().get(0));
+        if (container.listAll().isEmpty()) throw new AssertionError("Feature absent from catalog");
+        int previous;
+        do {
+            previous = container.listAll().size();
+            for (OperationContainer.OperationInfo<InstallSupport> i : new ArrayList<>(container.listAll()))
+                container.add(i.getRequiredElements());
+        } while (container.listAll().size() != previous);
+        for (OperationContainer.OperationInfo<InstallSupport> i : container.listAll())
+            if (!i.getBrokenDependencies().isEmpty()) throw new AssertionError(i.getUpdateElement() + ": " + i.getBrokenDependencies());
+        if (!container.listInvalid().isEmpty()) throw new AssertionError("Invalid installation elements");
+        System.out.println("Installing feature plus " + container.listAll().size() + " resolved modules");
+        InstallSupport support = container.getSupport();
+        InstallSupport.Validator validator = support.doDownload(null, false, true);
+        InstallSupport.Installer installer = support.doValidate(validator, null);
+        OperationSupport.Restarter restart = support.doInstall(installer, null);
+        if (restart != null) support.doRestartLater(restart);
+        System.out.println("PASS: Plugin Manager resolves and installs feature dependencies");
     }
 
     static ModuleInfo module(String name) {
