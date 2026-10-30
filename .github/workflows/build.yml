@@ -1,0 +1,56 @@
+name: Build and verify NetBeans 31
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - uses: actions/checkout@v4
+        with:
+          repository: piotrhoppe/netbeans-cnd
+          ref: d6b3122946815b16b613449723b09cafc3a46036
+          path: upstream
+      - uses: actions/checkout@v4
+        with:
+          repository: piotrhoppe/yenta
+          ref: a962a8bf57d305dd436ab1c1d8a01f47e35a9ad7
+          path: yenta
+      - name: Build yenta dependency
+        run: mvn -B -ntp -f yenta/pom.xml -DskipTests install
+      - name: Build CND modules
+        run: mvn -B -ntp -f upstream/pom.xml -Dmaven.test.skip=true clean install
+      - name: Download clean NetBeans 31
+        run: |
+          curl --fail --location --retry 3 https://archive.apache.org/dist/netbeans/netbeans/31/netbeans-31-bin.zip -o netbeans.zip
+          unzip -q netbeans.zip
+      - name: Inspect packages
+        run: |
+          python3 - <<'PY'
+          import zipfile, pathlib
+          for p in pathlib.Path("upstream/target/nbms").glob("*.nbm"):
+              with zipfile.ZipFile(p) as z:
+                  print("\nNBM",p.name, z.namelist())
+                  print(z.read("Info/info.xml").decode())
+          for p in pathlib.Path("netbeans").rglob("*nativeexecution*.jar"):
+              with zipfile.ZipFile(p) as z: print(p,z.read("META-INF/MANIFEST.MF").decode())
+          PY
+      - name: Save build artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cnd-build
+          path: |
+            upstream/target/nbms/
+            upstream/**/target/surefire-reports/
+          if-no-files-found: warn
