@@ -1,166 +1,166 @@
 {
   "netbeans": "31",
-  "version": "1.0.7",
+  "version": "1.0.6",
   "source": "d6b3122946815b16b613449723b09cafc3a46036",
   "packages": [
     {
       "file": "cnd-api-project-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "008216def510eae773d238bf87ea3c5b9b2d2da8ad8d32d8d286312ab35c7081",
+      "sha256": "5738ff34ebf9aea4565c86825af3c665765bfed09e4c8b3323996dbd2197bd78",
       "module": "org.netbeans.modules.cnd.api.project"
     },
     {
       "file": "cnd-api-remote-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "d15b33ad11f550862f99919aab3fe3771e846e10a4ed3d801bdfe3995c995ba5",
+      "sha256": "55c5fef28d8c66fd91a4d1621d84e67e5a3e1469d564f0dcc9e080f5888b6c06",
       "module": "org.netbeans.modules.cnd.api.remote"
     },
     {
       "file": "cnd-api-remote-ui-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "4df9ba21c1c1c62ae4c2540f6cea9496cf6da595a7a206e658dd66aaa2c9efc6",
+      "sha256": "0379c6e5fee83e2bfffda5b01c392401f8d55c6e9648883cb3ed6c8622c4acb2",
       "module": "org.netbeans.modules.cnd.api.remote.ui"
     },
     {
       "file": "cnd-core-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "e29e5b56924bfc48c2c6abfb8545efd57af5c6152e83e7b1097d934eeb802916",
+      "sha256": "73bd1651fe49c046aa3bf34d6f11b57197cdb24a7e09a2a6d09b877672f908f6",
       "module": "org.netbeans.modules.cnd"
     },
     {
       "file": "cnd-debugger-common2-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "c6eac543c47d59a2260fc90295ff29e73a959ac720b01b6697d572a4383b999c",
+      "sha256": "dca7eb73e7b3873db4377d5789ed8ffa2d7934fd08449b6e88aa99b8a96588c0",
       "module": "org.netbeans.modules.cnd.debugger.common2"
     },
     {
       "file": "cnd-debugger-gdb2-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "d83b59a43b8237c4b6f4a206817db61c660b14b2ee4ce19b1ce76e7f20e8f588",
+      "sha256": "2692f5aa2e5400bb096b3d8fd07a4b6e7748f7ed2936f0135de19d81ac0c6a9c",
       "module": "org.netbeans.modules.cnd.debugger.gdb2"
     },
     {
       "file": "cnd-discovery-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "c2750d71af0844c5de2d3914d51f2b6d74ca8cbb8a3daba5bf79aa8256531413",
+      "sha256": "6dcea1297ea4ce85861644f0e01fe4f3456e654598597bbd5b27705ff0a03f39",
       "module": "org.netbeans.modules.cnd.discovery"
     },
     {
       "file": "cnd-dwarfdump-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "1a56b0ca4b5be150d017c9de2fc7788a80aa8c0f4c7111c495e65dc57c7c0f4f",
+      "sha256": "09f1e51b18f3826b4b2fa7d35063c8f3dbf53e54572b34fe4b171863428d3551",
       "module": "org.netbeans.modules.cnd.dwarfdump"
     },
     {
       "file": "cnd-editor-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "efb3c51a30c168d5af40211103aa4cca7242a72dd61abc8d35611e832ffaf1f7",
+      "sha256": "b310bcf662fbdc643803178142f7e383dea906911614c63984bbb25419cd7767",
       "module": "org.netbeans.modules.cnd.editor"
     },
     {
       "file": "cnd-kit-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "1693262b240f5f843fe277ed952bc72f4a3575b670c70ba75d6786ce3a4aa101",
+      "sha256": "a81732339f9f54251ffd40b66c22b475e3f1c27c30ee360992e517a7fe4621bc",
       "module": "org.netbeans.modules.cnd.kit"
     },
     {
       "file": "cnd-lexer-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "b6e6efd3e1322a55af02ed0efa7b18c4cc7f03ed7e1d02a2767dfe3e7ddd0608",
+      "sha256": "33e9100e2acac9dc74a209cac021470dcad15a0b29fb9381e7572befc7795304",
       "module": "org.netbeans.modules.cnd.lexer"
     },
     {
       "file": "cnd-lsp-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "0cb2ae77ba9948eae7e07441833400874cd839ae3da596a659bf54432fa0086f",
+      "sha256": "b2e68c593658bf41256046f6f0af7ebf5b56e10e3a8049c89c1f636eb3666760",
       "module": "org.netbeans.modules.cnd.lsp"
     },
     {
       "file": "cnd-makeproject-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "3a30601e9eabced473ce746d24fd483e48f5aaf7676e9c7613d66849ea78d424",
+      "sha256": "ee1f9363c68bfa429810cd344478b87740b9b8d613ae0b42b3d252b5947ee68f",
       "module": "org.netbeans.modules.cnd.makeproject"
     },
     {
       "file": "cnd-makeproject-source-bridge-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "c08d3b821dca0ccd90b35ddd335e9cc5b01c95563e4c3ba78c9d7449e9e361c4",
+      "sha256": "4e895af23997ae1747107790fd4e80dfed826f9f93abf5c2cab1f35109f227ed",
       "module": "org.netbeans.modules.cnd.makeproject.source.bridge"
     },
     {
       "file": "cnd-makeproject-ui-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "d5ffa93df5b82288c1932f78eae5cbad803b5e874c4e008407f4f12889a70645",
+      "sha256": "346755fbbd1f85d73912f1f09dd6d32b3777eff275c007d899feebecd239cd00",
       "module": "org.netbeans.modules.cnd.makeproject.ui"
     },
     {
       "file": "cnd-meson-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "1144996d9d6064aa0eba99b10bbd2901b25a0c27703853a49726d93327136dbe",
+      "sha256": "0ad63cd77c97a196129d5318cc9ddc201c57102b35114b8b7dc64f0be471d21a",
       "module": "org.netbeans.modules.cnd.meson"
     },
     {
       "file": "cnd-remote-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "a2ae5ac21537944b2216ac51cec7a2a6263126546f74049b3c8eaafb1f6f630b",
+      "sha256": "caf81137704228aa1b622120440f496c0643c650a9b954c901cb7f94cf330bc5",
       "module": "org.netbeans.modules.cnd.remote"
     },
     {
       "file": "cnd-remote-projectui-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "8619412a1c8041155c8c11c6824f4a91664a55f5a5e68014637a57f3c530b5a5",
+      "sha256": "c31322b66763413c55080ace5f0e631d05b7fea4f3eee8d3099a832997237f4b",
       "module": "org.netbeans.modules.cnd.remote.projectui"
     },
     {
       "file": "cnd-remote-ui-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "2081b0e99371a9794c55071ee811901dc09616b3ccb2bfbd365c6d659c88fe3b",
+      "sha256": "581aa1a5cbaa154eeb7609215356908f6b69600e4db557d71d4679ca9309ab7f",
       "module": "org.netbeans.modules.cnd.remote.ui"
     },
     {
       "file": "cnd-script-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "c1356847c70125f1a9ca9a04e94e34a88a24d3d19ba0721682abaa3e589e5091",
+      "sha256": "922cf28ebb1ed11d93289e6b9a934806eb48a46aae9ef207474fd4067d2eaa9b",
       "module": "org.netbeans.modules.cnd.script"
     },
     {
       "file": "cnd-source-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "2cdf163def5c1522b92ffd239383f97ed562a45823f7dd1ed621107422997615",
+      "sha256": "023116fc044f016c76e40b92752f32adec05cc716f1dfb8af0d6e3b94201df6e",
       "module": "org.netbeans.modules.cnd.source"
     },
     {
       "file": "cnd-toolchain-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "e57bc1562eb0089f0329c963d4f844a8c1c01604feb77b96dc6b7cde83059dba",
+      "sha256": "dda0af00ee740d507220550169ecea7ee382c82cef2078073a2777581ece9513",
       "module": "org.netbeans.modules.cnd.toolchain"
     },
     {
       "file": "cnd-toolchain-ui-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "8e24c23920c00698bb98efb92a9e5c056ac3888573e8ec5e645e52cec1ff1573",
+      "sha256": "fc6cac4e1fae1b47396ced33debb47eda7b135541410fa02bb53c5ccf3cc70b3",
       "module": "org.netbeans.modules.cnd.toolchain.ui"
     },
     {
       "file": "cnd-ui-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "f8a1703100a55ea41250a8721e32018a56af63022aa988419a8e9c72b24aceaa",
+      "sha256": "8803bb4128b74d4b2d510e1a846cdff8fcd0bc7f98ae1bccd1ab6bf1750f398b",
       "module": "org.netbeans.modules.cnd.ui"
     },
     {
       "file": "cnd-utils-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "2865e46c747dd157185ff5408a08623681f6544f8672a8328233f5ad51ce0e18",
+      "sha256": "cfe8b0009f0554a94faea1d8c9abbaa301b7847e853c7600024d7b22cfd004a0",
       "module": "org.netbeans.modules.cnd.utils"
     },
     {
       "file": "cnd-utils-ui-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "faccc9acccb7b44208bbdd7e32f87475b85d548e350febc54163f16385628f18",
+      "sha256": "a37f14fa67bef1691666e2bec5d8216fa461ae401392c2d70263b7b036ca7bf4",
       "module": "org.netbeans.modules.cnd.utils.ui"
     },
     {
       "file": "dlight-libs-common-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "43bd54851410f6ae1f1b2c8b28cb04b62dea63511900707c40c32452bdc380a9",
+      "sha256": "28124fc7d1e66daafa932d13b425ad14fda48162c34e04ebf6ad47bfd0d7246a",
       "module": "org.netbeans.modules.dlight.libs.common"
     },
     {
       "file": "dlight-remote-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "4eb3880cc63344f7752b00152300cb39efba3a2dbb074c94b5d8bc6b01aca1c3",
+      "sha256": "e291cfa75d28930b755ef5ba24e0f0624bf6b049d870511ff2df762e93caa861",
       "module": "org.netbeans.modules.dlight.remote"
     },
     {
       "file": "dlight-remote-impl-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "6b84e66cf82807ce16f94664f9b6a5ad3fedf5863b340925d8002edaa519bead",
+      "sha256": "f5aeaf9f6015e97f0e42e125c32ea76889c54cd217234a0f2e1bcf113bc80662",
       "module": "org.netbeans.modules.dlight.remote.impl"
     },
     {
       "file": "dlight-remote-ui-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "f51127536d2588945b26ea2e17acb1b616f487501fb27794ae9a8cf3da731656",
+      "sha256": "e402ec9238068668700fbcb99f7e39257bc77afa7554afaac3cf786dacf22ec2",
       "module": "org.netbeans.modules.dlight.remote.ui"
     },
     {
       "file": "dlight-sendto-0.1.0.0-SNAPSHOT.nbm",
-      "sha256": "2827a85fe4a7440a0a176f946a0aa8b89926968952fba9505293b08874a8c69f",
+      "sha256": "69e8b467db82f0de49544a3cc7e1d585068b87138495662560530270e1b4ec6b",
       "module": "org.netbeans.modules.dlight.sendto"
     },
     {
       "file": "re-anas-netbeans-cpp.nbm",
-      "sha256": "7e68c5483312f273560e4268d65bcf17e8ddb745fe88c06246f6f76be2f1598d",
+      "sha256": "5e9057d825d2ecf166959e1bbc7a3caf0f54e0e644abf04a45d26f674020dcf2",
       "module": "re.anas.netbeans.cpp"
     }
   ]
