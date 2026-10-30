@@ -58,9 +58,9 @@ def main():
     module_manifest = {
         'Manifest-Version': '1.0',
         'OpenIDE-Module': cnb,
-        'OpenIDE-Module-Name': 'C/C++ Support for NetBeans 31',
+        'OpenIDE-Module-Name': 'C/C++ Support for NetBeans 31 (UNVERIFIED PREVIEW)',
         'OpenIDE-Module-Display-Category': 'C/C++',
-        'OpenIDE-Module-Short-Description': 'C/C++ projects, editor, GCC/Clang toolchains and GDB integration.',
+        'OpenIDE-Module-Short-Description': 'UNVERIFIED PREVIEW: builds successfully; installation and runtime compatibility are still under investigation.',
         'OpenIDE-Module-Specification-Version': args.version,
         'OpenIDE-Module-Public-Packages': '-',
         'OpenIDE-Module-Module-Dependencies': ', '.join(dependencies),
@@ -76,7 +76,7 @@ def main():
     jar_data = io.BytesIO()
     with zipfile.ZipFile(jar_data, 'w', zipfile.ZIP_DEFLATED) as z:
         z.writestr('META-INF/MANIFEST.MF', b'\r\n'.join(lines) + b'\r\n\r\n')
-    info = ET.Element('module', codenamebase=cnb, distribution=args.base_url.rstrip('/') + '/' + name + '.nbm', downloadsize='0', needsrestart='true', targetcluster='cnd')
+    info = ET.Element('module', codenamebase=cnb, distribution=args.base_url.rstrip('/') + '/' + name + '.nbm', downloadsize='0', needsrestart='true', targetcluster='cnd', license='Apache-2.0')
     manifest_attrs = {k: v for k, v in module_manifest.items() if k.startswith('OpenIDE-Module')}
     ET.SubElement(info, 'manifest', manifest_attrs)
     ET.SubElement(info, 'license', name='Apache-2.0').text = Path('upstream/LICENSE').read_text()
@@ -92,6 +92,7 @@ def main():
     records.append({'file': path.name, 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'module': cnb})
     (out / 'build.json').write_text(json.dumps({'netbeans': '31', 'version': args.version, 'source': 'd6b3122946815b16b613449723b09cafc3a46036', 'packages': records}, indent=2))
     (out / 'SHA256SUMS').write_text(''.join(r['sha256'] + '  ' + r['file'] + '\n' for r in records))
+    (out / 'PREVIEW.txt').write_text('UNVERIFIED PREVIEW. Compilation and package integrity checks pass. Installation/runtime verification is independent and may fail. These packages are not a stable or tested release. A C/C++ compiler and Make are required separately.\n')
     for filename in ['LICENSE', 'README.md']:
         shutil.copy2(Path('upstream') / filename, out / ('UPSTREAM-' + filename))
     print(f'Packaged {len(records)} modules')

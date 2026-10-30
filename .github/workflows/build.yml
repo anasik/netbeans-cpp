@@ -1,4 +1,4 @@
-name: Build and verify NetBeans 31
+name: Build, publish preview, and verify NetBeans 31
 on:
   push:
     branches: [main]
@@ -9,9 +9,10 @@ concurrency:
   group: netbeans-cpp-publish
   cancel-in-progress: false
 jobs:
-  build:
+  package:
+    name: Build and check preview packages
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-java@v5
@@ -38,12 +39,58 @@ jobs:
         run: |
           mvn -B -ntp -f upstream/pom.xml -Dmaven.test.skip=true clean install
           mvn -B -ntp -f upstream/pom.xml -Dmaven.test.skip=true -Pcollect-nbms -N install
+      - name: Package unverified preview update center
+        run: python3 scripts/package.py --version "1.0.${{ github.run_number }}" --base-url "https://github.com/${{ github.repository }}/releases/download/preview-${{ github.run_number }}-${{ github.run_attempt }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: preview-packages
+          path: site/
+          if-no-files-found: error
+  publish:
+    name: Publish unverified preview
+    needs: package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        with:
+          name: preview-packages
+          path: site
+      - name: Publish explicitly unverified prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          printf '%s\n' 'UNVERIFIED PREVIEW. Compilation and package integrity checks passed. NetBeans 31 installation/runtime compatibility is still being investigated; see the separate runtime job and its diagnostics. Requires a separately installed C/C++ compiler and Make.' > preview-notes.txt
+          gh release create "preview-${{ github.run_number }}-${{ github.run_attempt }}" site/* --prerelease --title "UNVERIFIED PREVIEW — NetBeans 31 C/C++ build ${{ github.run_number }}" --notes-file preview-notes.txt
+      - name: Publish stable preview catalog URL
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          publish_branch: gh-pages
+      - name: Check public catalog and every referenced download
+        run: python3 scripts/check_public.py https://raw.githubusercontent.com/${{ github.repository }}/gh-pages/updates.xml
+  runtime:
+    name: Clean NetBeans 31 installation and runtime diagnostics
+    needs: package
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/download-artifact@v4
+        with:
+          name: preview-packages
+          path: site
       - name: Download clean NetBeans 31
         run: |
           curl --fail --location --retry 3 https://archive.apache.org/dist/netbeans/netbeans/31/netbeans-31-bin.zip -o netbeans.zip
           unzip -q netbeans.zip
-      - name: Package update center
-        run: python3 scripts/package.py --version "1.0.${{ github.run_number }}" --base-url "https://github.com/${{ github.repository }}/releases/download/build-${{ github.run_number }}-${{ github.run_attempt }}"
       - name: Verify Plugin Manager install and C++ workflow
         run: xvfb-run -a python3 scripts/verify.py
       - name: Show verification logs
@@ -51,13 +98,12 @@ jobs:
         run: |
           cat verification/*.log || true
           cat test-userdir/var/log/messages.log || true
-      - name: Save build and test artifacts
+      - name: Preserve runtime diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cnd-build
+          name: netbeans31-runtime-diagnostics
           path: |
-            site/
             verification/
             test-userdir/var/log/
           if-no-files-found: warn
