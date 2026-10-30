@@ -5,6 +5,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: netbeans-cpp-publish
+  cancel-in-progress: false
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,31 +28,36 @@ jobs:
           repository: piotrhoppe/yenta
           ref: a962a8bf57d305dd436ab1c1d8a01f47e35a9ad7
           path: yenta
+      - uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: cnd-maven-${{ runner.os }}-v1
       - name: Build yenta dependency
         run: mvn -B -ntp -f yenta/pom.xml -DskipTests install
       - name: Build CND modules
-        run: mvn -B -ntp -f upstream/pom.xml -Dmaven.test.skip=true clean install
+        run: |
+          mvn -B -ntp -f upstream/pom.xml -Dmaven.test.skip=true clean install
+          mvn -B -ntp -f upstream/pom.xml -Dmaven.test.skip=true -Pcollect-nbms -N install
       - name: Download clean NetBeans 31
         run: |
           curl --fail --location --retry 3 https://archive.apache.org/dist/netbeans/netbeans/31/netbeans-31-bin.zip -o netbeans.zip
           unzip -q netbeans.zip
-      - name: Inspect packages
+      - name: Package update center
+        run: python3 scripts/package.py --version "1.0.${{ github.run_number }}" --base-url "https://github.com/${{ github.repository }}/releases/download/build-${{ github.run_number }}-${{ github.run_attempt }}"
+      - name: Verify Plugin Manager install and C++ workflow
+        run: xvfb-run -a python3 scripts/verify.py
+      - name: Show verification logs
+        if: always()
         run: |
-          python3 - <<'PY'
-          import zipfile, pathlib
-          for p in pathlib.Path("upstream/target/nbms").glob("*.nbm"):
-              with zipfile.ZipFile(p) as z:
-                  print("\nNBM",p.name, z.namelist())
-                  print(z.read("Info/info.xml").decode())
-          for p in pathlib.Path("netbeans").rglob("*nativeexecution*.jar"):
-              with zipfile.ZipFile(p) as z: print(p,z.read("META-INF/MANIFEST.MF").decode())
-          PY
-      - name: Save build artifacts
+          cat verification/*.log || true
+          cat test-userdir/var/log/messages.log || true
+      - name: Save build and test artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cnd-build
           path: |
-            upstream/target/nbms/
-            upstream/**/target/surefire-reports/
+            site/
+            verification/
+            test-userdir/var/log/
           if-no-files-found: warn
